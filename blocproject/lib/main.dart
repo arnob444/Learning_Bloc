@@ -13,7 +13,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => CounterBloc(),
-      child: MaterialApp(title: 'Demo', home: HomePage()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Demo',
+        home: HomePage(),
+      ),
     );
   }
 }
@@ -25,24 +29,57 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Material App Bar')),
-      body: Center(
-        child: BlocBuilder<CounterBloc, CounterState>(
-          builder: (context, state) {
-            return Text(
-              state.count.toString(),
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            );
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<CounterBloc>().add(Increment());
-        },
-        child: Icon(Icons.add),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // BlocBuilder<CounterBloc, CounterState>(
+          //   builder: (context, state) {
+          //     return Text(
+          //       state.count.toString(),
+          //       style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+          //     );
+          //   },
+          // ),
+
+          // BlocListener<CounterBloc, CounterState>(
+          //   listener: (context, state) {
+          //   },
+          // ),
+          
+          BlocConsumer<CounterBloc, CounterState>(
+            builder: (context, state) {
+              return Text(
+                state.count.toString(),
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+              );
+            },
+            listener: (context, state) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('Its working')));
+            },
+          ),
+          const SizedBox(height: 22),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  context.read<CounterBloc>().add(Increment());
+                },
+                child: Text('Increment'),
+              ),
+              SizedBox(width: 12),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<CounterBloc>().add(Decrement());
+                },
+                child: Text('Decrement'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
-
-// 40:41
