@@ -6,7 +6,7 @@ class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(SplashInitial());
 
   void startSplash() {
-    Future.delayed(const Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(seconds: 2), () {
       emit(SplashEnd());
     });
   }

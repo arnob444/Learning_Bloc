@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import '../data/services/auth_service.dart';
 import '../presentation/screens/screens.dart';
 part 'routes.dart';
 
